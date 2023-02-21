@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../model/post_model.dart';
 import '../service/http_service.dart';
+import '../view/item_of_post.dart';
 import 'create_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -40,7 +41,7 @@ class _HomePageState extends State<HomePage> {
                 ListView.builder(
                   itemCount: viewModel.items.length,
                   itemBuilder: (context, index) {
-                    return itemOfPost(viewModel.items[index]);
+                    return itemOfPost(viewModel.items[index], viewModel);
                   },
                 )
               ],
@@ -57,48 +58,5 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget itemOfPost(Post post) {
-    return Slidable(
-      startActionPane: ActionPane (
-        motion: const ScrollMotion(),
-        dismissible: Dismissible(onDismissed: (direction) {}, key: const Key(""), child: const SizedBox(),),
-        children: [
-          SlidableAction(
-            onPressed: (context) {},
-            backgroundColor: Colors.green,
-            foregroundColor: Colors.white,
-            icon: Icons.edit,
-            label: "Update",
-          ),
-
-        ],
-      ),
-      endActionPane: ActionPane(
-        motion: const ScrollMotion(),
-        children: [
-          SlidableAction(
-            onPressed: (BuildContext context) {
-              viewModel.apiPostDelete(post);
-            },
-            backgroundColor: Colors.red,
-            foregroundColor: Colors.white,
-            icon: Icons.delete,
-            label: 'Delete',
-          ),
-        ],
-      ),
-      child: Container(
-        padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(post.title!.toUpperCase(), style: const TextStyle()),
-            const SizedBox(height: 5,),
-            Text(post.body!, style: const TextStyle(color: Colors.black54),)
-          ],
-        ),
-      ),
-    );
-  }
-
 }
+
